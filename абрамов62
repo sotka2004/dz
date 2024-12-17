@@ -1,1 +1,21 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+	setlocale(LC_ALL, "russian");
+
+	int n;
+	cout << "Ведите число :";
+	cin >> n;
+	if (n % 2 == 0) {
+		cout << "Число " << n << " является четным." << endl;
+	}
+	else {
+		cout << "Число " << n << " является нечетным." << endl;
+	}
+
+	return 0;
+
+	}
+
 
