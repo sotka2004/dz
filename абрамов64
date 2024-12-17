@@ -1,0 +1,24 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+    setlocale(LC_ALL, "RU");
+    int c;
+
+    
+    cout << "Введите натуральное число больше 99 ";
+    cin >> c;
+
+    if (c <= 99) {
+        cout << "Ошибка! Число должно быть больше 99" << endl;
+         
+    }
+
+  
+    int a = c / 100;
+
+    
+    cout << "Количество сотен в числе " << a << endl;
+
+    return 0;
+}
