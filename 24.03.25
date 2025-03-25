@@ -1,0 +1,247 @@
+#include <iostream>
+using namespace std;
+class college {
+protected:
+    string name_director;
+    int  tualet;
+
+
+public:
+    virtual void print() = 0;
+
+};
+
+class auditouria :public college {
+protected:
+    double number_class;
+    int partys;
+
+public:
+    auditouria() {
+
+        number_class = 0;
+        partys = 0;
+        tualet = 0;
+        name_director = "";
+
+    }
+    auditouria(string name_director, int  tualet, double number_class, int partys) {
+        this->name_director = name_director;
+        this->tualet = tualet;
+        this->number_class = number_class;
+        this->partys = partys;
+    }
+    void print() {
+        cout << "имя директора  " << name_director << endl;
+        cout << "количество туалетов   " << tualet << endl;
+        cout << "номер класса " << number_class << endl;
+        cout << "количество парт   " << partys << endl;
+
+
+    }
+    friend ostream& operator<<(ostream& out, auditouria& p) {
+        out << "имя директора  " << p.name_director << endl;
+        out << "количество туалетов   " << p.tualet << endl;
+        out << "номер класса " << p.number_class << endl;
+        out << "парты    " << p.partys << endl;
+
+        return out;
+    }
+
+
+};
+class student : public auditouria {
+protected:
+    double evaluations;
+    string name;
+    int age;
+
+
+public:
+    student() {
+        number_class = 0;
+        partys = 0;
+        tualet = 0;
+        name_director = "";
+        evaluations = 0;
+        name = "";
+        age = 0;
+
+
+
+
+
+
+
+    }
+    student(int age, string name, double evaluations, string name_director, int  tualet, double number_class, int partys) {
+        this->name_director = name_director;
+        this->tualet = tualet;
+        this->number_class = number_class;
+        this->partys = partys;
+        this->evaluations = evaluations;
+        this->name = name;
+        this->age = age;
+
+
+
+    }
+    void print() {
+        cout << "имя директора  " << name_director << endl;
+        cout << "количество туалетов   " << tualet << endl;
+        cout << "номер класса " << number_class << endl;
+        cout << "количество парт   " << partys << endl;
+        cout << "оценки" << evaluations << endl;
+        cout << "имя" << name << endl;
+        cout << "возраст" << age << endl;
+
+
+    }
+    friend ostream& operator<<(ostream& out, student& p) {
+        out << "имя директора  " << p.name_director << endl;
+        out << "количество туалетов   " << p.tualet << endl;
+        out << "номер класса " << p.number_class << endl;
+        out << "количество парт     " << p.partys << endl;
+        out << "оценки" << p.evaluations << endl;
+        out << "имя" << p.name << endl;
+        out << "возраст" << p.age << endl;
+
+        return out;
+    }
+
+
+
+};
+class out_student :public student {
+protected:
+    string data_out;
+
+
+public:
+    out_student() {
+        number_class = 0;
+        partys = 0;
+        tualet = 0;
+        name_director = "";
+        evaluations = 0;
+        name = "";
+        age = 0;
+        data_out = "";
+
+
+
+
+
+
+
+    }
+    out_student(int age, string name, double evaluations, string name_director, int  tualet, double number_class, int partys) {
+        this->name_director = name_director;
+        this->tualet = tualet;
+        this->number_class = number_class;
+        this->partys = partys;
+        this->evaluations = evaluations;
+        this->name = name;
+        this->age = age;
+        this->data_out = data_out;
+
+
+
+    }
+    void print() {
+        cout << "имя директора  " << name_director << endl;
+        cout << "количество туалетов  " << tualet << endl;
+        cout << "номер класса " << number_class << endl;
+        cout << "количество парт    " << partys << endl;
+        cout << "оценки" << evaluations << endl;
+        cout << "имя" << name << endl;
+        cout << "возраст" << age << endl;
+        cout << "дата отчисления " << data_out << endl;
+    }
+    friend ostream& operator<<(ostream& out, out_student& p) {
+        out << "имя директора  " << p.name_director << endl;
+        out << "количество туалетов  " << p.tualet << endl;
+        out << "номер класса " << p.number_class << endl;
+        out << "количество парт    " << p.partys << endl;
+        out << "оценки" << p.evaluations << endl;
+        out << "имя" << p.name << endl;
+        out << "возраст" << p.age << endl;
+        out << "дата отчисления " << p.data_out << endl;
+
+        return out;
+    }
+};
+
+class Alex :public out_student {
+protected:
+    string second_name;
+
+
+public:
+    Alex() {
+        number_class = 0;
+        partys = 0;
+        tualet = 0;
+        name_director = "";
+        evaluations = 0;
+        name = "";
+        age = 0;
+        data_out = "";
+        second_name = "";
+
+
+
+
+
+
+
+    }
+    Alex(int age, string name, double evaluations, string name_director, int  tualet, double number_class, int partys, string second_name, string data_out) {
+        this->name_director = name_director;
+        this->tualet = tualet;
+        this->number_class = number_class;
+        this->partys = partys;
+        this->evaluations = evaluations;
+        this->name = name;
+        this->age = age;
+        this->data_out = data_out;
+        this->second_name = second_name;
+
+
+
+    }
+    void print() {
+        cout << "имя директора  " << name_director << endl;
+        cout << "количество туалетов   " << tualet << endl;
+        cout << "номер класса " << number_class << endl;
+        cout << "количество парт    " << partys << endl;
+        cout << "оценки" << evaluations << endl;
+        cout << "имя" << name << endl;
+        cout << "возраст" << age << endl;
+        cout << "дата отчисления " << data_out << endl;
+        cout << "фамилия" << second_name << endl;
+
+
+    }
+    friend ostream& operator<<(ostream& out, Alex& p) {
+        out << "имя директора  " << p.name_director << endl;
+        out << "количество туалетов   " << p.tualet << endl;
+        out << "номер класса " << p.number_class << endl;
+        out << "количество парт   " << p.partys << endl;
+        out << "оценки" << p.evaluations << endl;
+        out << "имя" << p.name << endl;
+        out << "возраст" << p.age << endl;
+        out << "дата отчисления " << p.data_out << endl;
+        out << "фамилия" << p.second_name << endl;
+
+        return out;
+    }
+};
+
+
+int main()
+{
+    setlocale(LC_ALL, "RU");
+    Alex privet{  999," конор магрегор",0.1," олег ", 1, 1.06, 4," распутин"," октябрь 1543"};
+    cout << privet << endl;
+};
