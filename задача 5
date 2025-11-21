@@ -1,0 +1,58 @@
+using System;
+using System.Threading;
+using System.Threading.Tasks;
+
+class Program
+{
+    static async Task Main()
+    {
+        Console.WriteLine("=== ПАРАЛЛЕЛЬНЫЕ ЗАДАЧИ С ОТМЕНОЙ ===\n");
+        using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(3));
+
+        var task1 = LongOperationAsync("Задача 1", cts.Token);
+        var task2 = LongOperationAsync("Задача 2", cts.Token);
+
+        try
+        {
+            await Task.WhenAll(task1, task2);
+        }
+        catch (OperationCanceledException)
+        {
+            Console.WriteLine("\nВсе задачи были отменены через 3 секунды");
+        }
+
+        var result1 = await task1;
+        var result2 = await task2;
+
+        Console.WriteLine($"\n=== РЕЗУЛЬТАТЫ ===");
+        Console.WriteLine($"Задача 1: завершено {result1} итераций");
+        Console.WriteLine($"Задача 2: завершено {result2} итераций");
+    }
+
+    static async Task<int> LongOperationAsync(string taskName, CancellationToken cancellationToken)
+    {
+        int completedIterations = 0;
+
+        Console.WriteLine($"{taskName}: запущена");
+
+        try
+        {
+            for (int i = 1; i <= 10; i++)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Task.Delay(500, cancellationToken);
+
+                completedIterations++;
+                Console.WriteLine($"{taskName}: итерация {i} завершена");
+            }
+
+            Console.WriteLine($"{taskName}: все итерации завершены");
+        }
+        catch (OperationCanceledException)
+        {
+            Console.WriteLine($"{taskName}: отменена на итерации {completedIterations + 1}");
+        }
+
+        return completedIterations;
+    }
+}
