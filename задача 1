@@ -1,0 +1,59 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+class Program
+{
+    static void Main()
+    {
+
+        List<int> numbers = Enumerable.Range(1, 100).ToList();
+
+        try
+        {
+            long totalSum = CalculateSumOfSquares(numbers);
+            Console.WriteLine($"Общая сумма квадратов: {totalSum}");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Ошибка: {ex.Message}");
+        }
+    }
+
+    static long CalculateSumOfSquares(List<int> numbers)
+    {
+        int chunkSize = numbers.Count / 4;
+        Task<long>[] tasks = new Task<long>[4];
+
+        for (int i = 0; i < 4; i++)
+        {
+            int start = i * chunkSize;
+            int end = (i == 3) ? numbers.Count : start + chunkSize;
+
+            tasks[i] = Task.Run(() => ProcessChunk(numbers, start, end));
+        }
+
+        Task.WaitAll(tasks);
+
+        return tasks.Sum(t => t.Result);
+    }
+
+    static long ProcessChunk(List<int> numbers, int start, int end)
+    {
+        long sum = 0;
+
+        for (int i = start; i < end; i++)
+        {
+            if (numbers[i] < 0)
+            {
+                Console.WriteLine($"Обнаружено отрицательное число: {numbers[i]}. Игнорируем.");
+                continue;
+            }
+
+            sum += numbers[i] * numbers[i];
+        }
+
+        return sum;
+    }
+}
