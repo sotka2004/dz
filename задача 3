@@ -1,0 +1,40 @@
+using System.Threading;
+internal class Program
+{
+    static int count = 0;
+    static object locker = new object();
+
+    static void Main()
+    {
+        Console.WriteLine("Запуск 5 потоков, каждый делает 1000 инкрементов...");
+        Thread[] threads = new Thread[5];
+
+        for (int i = 0; i < 5; i++)
+        {
+            threads[i] = new Thread(Add);
+            threads[i].Start();
+        }
+
+
+        foreach (Thread thread in threads)
+        {
+            thread.Join();
+        }
+
+        Console.WriteLine($"Финальное значение: {count}");
+        Console.WriteLine($"Ожидаемое значение: 5000");
+        Console.WriteLine($"Результат верен: {count == 5000}");
+    }
+
+    static void Add()
+    {
+        for (int i = 0; i < 1000; i++)
+        {
+            lock (locker)
+            {
+                count++;
+            }
+        }
+        Console.WriteLine($"Поток {Thread.CurrentThread.ManagedThreadId} завершил работу");
+    }
+}
