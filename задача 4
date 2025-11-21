@@ -1,0 +1,40 @@
+using System;
+using System.Threading.Tasks;
+
+class Program
+{
+    static void Main()
+    {
+        var Results = new List<double>();
+        var numbers = new[] { 1, -4, 9 };
+        var tasks = new List<Task>();
+
+        foreach (var number in numbers)
+        {
+            var task = Task.Run(() => Sqrt(number))
+                .ContinueWith(t =>
+                {
+                    if (t.IsFaulted)
+                    {
+                        Console.WriteLine($"Ошибка: {t.Exception.InnerException.Message}");
+                    }
+                    else if (t.IsCompletedSuccessfully)
+                    {
+                        Results.Add(t.Result);
+                        Console.WriteLine($"Результат: {t.Result}");
+                    }
+                });
+
+            tasks.Add(task);
+        }
+        Task.WaitAll(tasks.ToArray());
+
+        Console.WriteLine($"\nУспешные результаты: {string.Join(", ", Results)}");
+    }
+
+    static double Sqrt(double x)
+    {
+        if (x < 0) throw new ArgumentException($"Число {x} отрицательное");
+        return Math.Sqrt(x);
+    }
+}
